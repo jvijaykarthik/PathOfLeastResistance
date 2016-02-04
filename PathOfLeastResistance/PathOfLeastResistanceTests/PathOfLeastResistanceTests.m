@@ -45,8 +45,21 @@
     XCTAssertFalse([objViewCtrlr nRowCount] >= 1 && [objViewCtrlr nRowCount] <= 10 && [objViewCtrlr nColumnCount] >= 5 && [objViewCtrlr nColumnCount] <= 100 ,@"Values are within limit");
 }
 
-- (void)testScenario1 {
-//    ViewController *objViewCtrlr = [[ViewController alloc] init];
+- (void)testScenario1
+{
+    [objViewCtrlr setNRowCount:2];
+    [objViewCtrlr setNColumnCount:5];
+    
+    NSArray *arr1 = [[NSArray alloc] initWithObjects:@"3",@"5",@"7",@"9",@"10", nil];
+    NSArray *arr2 = [[NSArray alloc] initWithObjects:@"23",@"5",@"23",@"-12",@"1", nil];
+    
+    [objViewCtrlr setArrInput:[[NSMutableArray alloc] initWithObjects:arr1,arr2, nil]];
+    [objViewCtrlr setArrOutput:[[NSMutableArray alloc] init]];
+    [objViewCtrlr setUpData];
+    
+    XCTAssertTrue([[objViewCtrlr objLPRModel] pathTotal] < 50 ,@"Path print have not exceeded the total limit");
+    XCTAssertEqual([[objViewCtrlr objLPRModel] pathTotal], 4, @"Path total matches");
+    XCTAssertEqualObjects([[objViewCtrlr objLPRModel] pathPrint], @"11122", @"Path print matches");
 }
 
 - (void)testPerformanceExample {

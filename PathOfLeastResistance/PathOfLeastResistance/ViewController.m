@@ -18,9 +18,6 @@
 
 @implementation ViewController
 
-NSMutableArray *arrInput;
-NSMutableArray *arrOutput;
-NSMutableArray *arrFailedOutput;
 NSMutableDictionary *dicData;
 
 int nMinRowCount = 1;
@@ -33,10 +30,10 @@ int nTotalResist = 50;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    arrOutput = [[NSMutableArray alloc] init];
-    arrFailedOutput = [[NSMutableArray alloc] init];
+    _arrOutput = [[NSMutableArray alloc] init];
+    _arrFailedOutput = [[NSMutableArray alloc] init];
+    _objLPRModel = [[LPRModel alloc] init];
     dicData = [[NSMutableDictionary alloc] init];
-    arrInput = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,9 +43,9 @@ int nTotalResist = 50;
 - (IBAction)startProcess:(id)sender
 {
     @try {
-        [arrInput removeAllObjects];
-        [arrOutput removeAllObjects];
-        [arrFailedOutput removeAllObjects];
+        [_arrInput removeAllObjects];
+        [_arrOutput removeAllObjects];
+        [_arrFailedOutput removeAllObjects];
         [dicData removeAllObjects];
         [[self txtInput] setText:@""];
         [[self txtOutput] setText:@""];
@@ -89,7 +86,7 @@ int nTotalResist = 50;
 {
     if ([arrRowColumn count] == 2)
     {
-        arrInput = [[NSMutableArray alloc] initWithCapacity:[[arrRowColumn objectAtIndex:0] integerValue]];
+        _arrInput = [[NSMutableArray alloc] initWithCapacity:[[arrRowColumn objectAtIndex:0] integerValue]];
         [self setNRowCount:[[arrRowColumn objectAtIndex:0] integerValue]];
         [self setNColumnCount:[[arrRowColumn objectAtIndex:1] integerValue]];
         if (_nRowCount >= nMinRowCount && _nColumnCount >= nMinColCount && _nRowCount <= nMaxRowCount && _nColumnCount <= nMaxColCount) {
@@ -133,7 +130,7 @@ int nTotalResist = 50;
                                    handler:^(UIAlertAction *action) {
                                        NSString *strRowValue = ((UITextField*)[weakAlert.textFields objectAtIndex:0]).text;
                                        NSArray *arrRowValue = [self strIntoArray:strRowValue];
-                                       [arrInput insertObject:arrRowValue atIndex:nRow];
+                                       [_arrInput insertObject:arrRowValue atIndex:nRow];
                                        [blockSelf showAlert:nRow+1];
                                    }];
         
@@ -175,7 +172,7 @@ int nTotalResist = 50;
         [self recursionDicForX:i
                           forY:0
                 withInitialKey:[NSString stringWithFormat:@"%d",i+1]
-              withInitialTotal:[[[arrInput objectAtIndex:i] objectAtIndex:0] integerValue]];
+              withInitialTotal:[[[_arrInput objectAtIndex:i] objectAtIndex:0] integerValue]];
     }
     
     /* Display the output */
@@ -222,7 +219,7 @@ int nTotalResist = 50;
         if ([arrSubString count] == 2)
         {
             NSString *strPathPrint = [NSString stringWithFormat:@"%@%d",initialKey,([[arrSubString objectAtIndex:0] intValue] + 1)];
-            NSInteger nPathTotal = nTotal + [[[arrInput objectAtIndex:[[arrSubString objectAtIndex:0] integerValue]] objectAtIndex:[[arrSubString objectAtIndex:1] integerValue]] integerValue];
+            NSInteger nPathTotal = nTotal + [[[_arrInput objectAtIndex:[[arrSubString objectAtIndex:0] integerValue]] objectAtIndex:[[arrSubString objectAtIndex:1] integerValue]] integerValue];
             
             LPRModel *objOPModel = [[LPRModel alloc] init];
             if (nPathTotal < nTotalResist)
@@ -232,7 +229,7 @@ int nTotalResist = 50;
                 
                 if ([strPathPrint length] == _nColumnCount)
                 {
-                    [arrOutput addObject:objOPModel];
+                    [_arrOutput addObject:objOPModel];
                 }
                 [self recursionDicForX:[[arrSubString objectAtIndex:0] intValue]
                                   forY:[[arrSubString objectAtIndex:1] intValue]
@@ -243,7 +240,7 @@ int nTotalResist = 50;
             {
                 [objOPModel setPathPrint:initialKey];
                 [objOPModel setPathTotal:nTotal];
-                [arrFailedOutput addObject:objOPModel];
+                [_arrFailedOutput addObject:objOPModel];
             }
         }
     }
@@ -251,25 +248,25 @@ int nTotalResist = 50;
 
 - (void)printOutput
 {
-    NSArray *sortedArray = [arrOutput sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+    NSArray *sortedArray = [_arrOutput sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         NSInteger first = [(LPRModel*)a pathTotal];
         NSInteger second = [(LPRModel*)b pathTotal];
         return first > second;
     }];
     NSString *strAlert = [NSString stringWithFormat:@"Sorry all paths exceeds total resitance of %d",nTotalResist];
     if ([sortedArray count] > 0) {
-        LPRModel *obj = (LPRModel*)[sortedArray objectAtIndex:0];
-        strAlert = [NSString stringWithFormat:@"%@ \n %ld \n %@",([obj pathTotal] < nTotalResist && [[obj pathPrint] length] == _nColumnCount) ? @"YES" : @"NO", (long)[obj pathTotal], [obj pathPrint]];
+        _objLPRModel = (LPRModel*)[sortedArray objectAtIndex:0];
+        strAlert = [NSString stringWithFormat:@"%@ \n %ld \n %@",([_objLPRModel pathTotal] < nTotalResist && [[_objLPRModel pathPrint] length] == _nColumnCount) ? @"YES" : @"NO", (long)[_objLPRModel pathTotal], [_objLPRModel pathPrint]];
         
     } else {
-        sortedArray = [arrFailedOutput sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        sortedArray = [_arrFailedOutput sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
             NSInteger first = [(LPRModel*)a pathTotal];
             NSInteger second = [(LPRModel*)b pathTotal];
             return first < second;
         }];
         if ([sortedArray count] > 0) {
-            LPRModel *obj = (LPRModel*)[sortedArray objectAtIndex:0];
-            strAlert = [NSString stringWithFormat:@"NO \n %ld \n %@", (long)[obj pathTotal], [obj pathPrint]];
+            _objLPRModel = (LPRModel*)[sortedArray objectAtIndex:0];
+            strAlert = [NSString stringWithFormat:@"NO \n %ld \n %@", (long)[_objLPRModel pathTotal], [_objLPRModel pathPrint]];
         }
     }
     [self printInput];
@@ -280,9 +277,9 @@ int nTotalResist = 50;
 - (void)printInput
 {
     NSString *strInput = @"";
-    for (int nRow = 0; nRow < [arrInput count]; nRow++)
+    for (int nRow = 0; nRow < [_arrInput count]; nRow++)
     {
-        NSArray *arrRow = (NSArray*)[arrInput objectAtIndex:nRow];
+        NSArray *arrRow = (NSArray*)[_arrInput objectAtIndex:nRow];
         for (int nCol = 0; nCol < [arrRow count]; nCol++)
         {
             strInput = [NSString stringWithFormat:@"%@ %@",strInput,[arrRow objectAtIndex:nCol]];
