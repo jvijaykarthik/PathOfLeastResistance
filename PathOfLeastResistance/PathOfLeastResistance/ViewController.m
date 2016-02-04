@@ -11,6 +11,9 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextView *txtInput;
+@property (weak, nonatomic) IBOutlet UITextView *txtOutput;
+
 @end
 
 @implementation ViewController
@@ -20,8 +23,6 @@ NSMutableArray *arrOutput;
 NSMutableArray *arrFailedOutput;
 NSMutableDictionary *dicData;
 
-//int nRowCount;
-//int nColumnCount;
 int nMinRowCount = 1;
 int nMaxRowCount = 10;
 int nMinColCount = 5;
@@ -45,6 +46,12 @@ int nTotalResist = 50;
 - (IBAction)startProcess:(id)sender
 {
     @try {
+        [arrInput removeAllObjects];
+        [arrOutput removeAllObjects];
+        [arrFailedOutput removeAllObjects];
+        [dicData removeAllObjects];
+        [[self txtInput] setText:@""];
+        [[self txtOutput] setText:@""];
         [self getInput];
     }
     @catch (NSException *exception) {
@@ -61,6 +68,7 @@ int nTotalResist = 50;
     
     __weak UIAlertController *weakAlert = alertController;
     __block ViewController *blockSelf = self;
+    
     UIAlertAction *okAction = [UIAlertAction
                                actionWithTitle:@"OK"
                                style:UIAlertActionStyleDefault
@@ -70,8 +78,7 @@ int nTotalResist = 50;
                                    [blockSelf getRowValues:arrRowColumn];
                                }];
     
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *inputTextField)
-     {
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *inputTextField) {
          inputTextField.placeholder = @"X,Y";
      }];
     [alertController addAction:okAction];
@@ -83,8 +90,6 @@ int nTotalResist = 50;
     if ([arrRowColumn count] == 2)
     {
         arrInput = [[NSMutableArray alloc] initWithCapacity:[[arrRowColumn objectAtIndex:0] integerValue]];
-//        nRowCount = [[arrRowColumn objectAtIndex:0] intValue];
-//        nColumnCount = [[arrRowColumn objectAtIndex:1] intValue];
         [self setNRowCount:[[arrRowColumn objectAtIndex:0] integerValue]];
         [self setNColumnCount:[[arrRowColumn objectAtIndex:1] integerValue]];
         if (_nRowCount >= nMinRowCount && _nColumnCount >= nMinColCount && _nRowCount <= nMaxRowCount && _nColumnCount <= nMaxColCount) {
@@ -116,7 +121,7 @@ int nTotalResist = 50;
     {
         UIAlertController *alertController = [UIAlertController
                                               alertControllerWithTitle:@"Path of Least Resistance"
-                                              message:[NSString stringWithFormat:@"Enter values for Row : %ld",nRow+1]
+                                              message:[NSString stringWithFormat:@"Enter %ld values for Row : %ld",_nColumnCount ,nRow+1]
                                               preferredStyle:UIAlertControllerStyleAlert];
         
         __weak UIAlertController *weakAlert = alertController;
@@ -134,7 +139,7 @@ int nTotalResist = 50;
         
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *inputTextField)
          {
-             inputTextField.placeholder = @"X,Y,Z";
+             inputTextField.placeholder = @"A,B,C...N";
          }];
         [alertController addAction:okAction];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -173,7 +178,7 @@ int nTotalResist = 50;
               withInitialTotal:[[[arrInput objectAtIndex:i] objectAtIndex:0] integerValue]];
     }
     
-    /* Print the output */
+    /* Display the output */
     [self printOutput];
 }
 
@@ -267,14 +272,25 @@ int nTotalResist = 50;
             strAlert = [NSString stringWithFormat:@"NO \n %ld \n %@", (long)[obj pathTotal], [obj pathPrint]];
         }
     }
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Path of Least Resistance"
-                                                                             message:strAlert
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alertController addAction:okAction];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self printInput];
+    [_txtOutput setText:strAlert];
+    [_txtOutput setUserInteractionEnabled:NO];
+}
+
+- (void)printInput
+{
+    NSString *strInput = @"";
+    for (int nRow = 0; nRow < [arrInput count]; nRow++)
+    {
+        NSArray *arrRow = (NSArray*)[arrInput objectAtIndex:nRow];
+        for (int nCol = 0; nCol < [arrRow count]; nCol++)
+        {
+            strInput = [NSString stringWithFormat:@"%@ %@",strInput,[arrRow objectAtIndex:nCol]];
+        }
+        strInput = [NSString stringWithFormat:@"%@\n",strInput];
+    }
+    [_txtInput setText:strInput];
+    [_txtInput setUserInteractionEnabled:NO];
 }
 
 - (NSArray*)strIntoArray:(NSString*)strInput

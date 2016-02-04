@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-r3-h7Y">
-                                <rect key="frame" x="258" y="283" width="85" height="35"/>
+                                <rect key="frame" x="265" y="74" width="71" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="emM-D8-kIZ"/>
                                     <constraint firstAttribute="width" constant="85" id="qVn-ha-OKk"/>
@@ -26,26 +27,75 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="emM-D8-kIZ"/>
+                                        <exclude reference="qVn-ha-OKk"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Muy-gj-7ry">
-                                <rect key="frame" x="277" y="528" width="47" height="30"/>
+                                <rect key="frame" x="277" y="396" width="47" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="iLR-eQ-Bec"/>
                                 </constraints>
                                 <state key="normal" title="START"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="iLR-eQ-Bec"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="startProcess:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qiL-Wo-zXj"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AQg-Da-iT9">
+                                <rect key="frame" x="40" y="120" width="520" height="256"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5aZ-D5-fZ9">
+                                        <rect key="frame" x="140" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="TQ8-Yl-TEG"/>
+                                            <constraint firstAttribute="height" constant="128" id="mA5-57-Jze"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xu8-Q4-C9L">
+                                        <rect key="frame" x="235" y="128" width="50" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="g3P-tG-jv3"/>
+                                            <constraint firstAttribute="height" constant="128" id="vi5-CX-5re"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="FEZ-5I-Zlc"/>
+                                    <constraint firstAttribute="height" constant="256" id="PwH-3H-bgy"/>
+                                </constraints>
+                                <variation key="heightClass=compact" axis="horizontal"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zKw-r3-h7Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LeX-2o-Uy1"/>
+                            <constraint firstItem="AQg-Da-iT9" firstAttribute="top" relation="lessThanOrEqual" secondItem="zKw-r3-h7Y" secondAttribute="bottom" constant="25" id="Aox-l8-Geg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AQg-Da-iT9" secondAttribute="trailing" constant="20" id="BOb-QV-Kvw"/>
+                            <constraint firstItem="Muy-gj-7ry" firstAttribute="top" secondItem="AQg-Da-iT9" secondAttribute="bottom" constant="20" id="Fsa-eA-9i2"/>
+                            <constraint firstItem="zKw-r3-h7Y" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="54" id="KwK-JD-6a0"/>
+                            <constraint firstItem="zKw-r3-h7Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yxy-Xb-6YR"/>
+                            <constraint firstItem="AQg-Da-iT9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="ZLf-lv-Ogj"/>
                             <constraint firstItem="Muy-gj-7ry" firstAttribute="centerX" secondItem="zKw-r3-h7Y" secondAttribute="centerX" id="duP-6Z-w6q"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Muy-gj-7ry" secondAttribute="bottom" constant="42" id="jiO-qz-6kV"/>
-                            <constraint firstItem="zKw-r3-h7Y" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rwB-ZR-Gua"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="txtInput" destination="5aZ-D5-fZ9" id="rpn-OA-o0G"/>
+                        <outlet property="txtOutput" destination="Xu8-Q4-C9L" id="KLQ-a9-EfP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
