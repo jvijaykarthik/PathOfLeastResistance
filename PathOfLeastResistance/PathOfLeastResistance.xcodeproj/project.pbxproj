@@ -15,6 +15,8 @@
 		66F521CB1C62CFC400408DE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66F521C91C62CFC400408DE2 /* LaunchScreen.storyboard */; };
 		66F521D61C62CFC400408DE2 /* PathOfLeastResistanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F521D51C62CFC400408DE2 /* PathOfLeastResistanceTests.m */; };
 		66F521E11C62CFC400408DE2 /* PathOfLeastResistanceUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F521E01C62CFC400408DE2 /* PathOfLeastResistanceUITests.m */; };
+		66F521F21C62D3E000408DE2 /* LPRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F521F11C62D3E000408DE2 /* LPRModel.m */; };
+		66F521F31C62D3E000408DE2 /* LPRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F521F11C62D3E000408DE2 /* LPRModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		66F521DC1C62CFC400408DE2 /* PathOfLeastResistanceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathOfLeastResistanceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66F521E01C62CFC400408DE2 /* PathOfLeastResistanceUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PathOfLeastResistanceUITests.m; sourceTree = "<group>"; };
 		66F521E21C62CFC400408DE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66F521F01C62D3E000408DE2 /* LPRModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LPRModel.h; path = PathOfLeastResistance/Model/LPRModel.h; sourceTree = "<group>"; };
+		66F521F11C62D3E000408DE2 /* LPRModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LPRModel.m; path = PathOfLeastResistance/Model/LPRModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 		66F521AF1C62CFC300408DE2 = {
 			isa = PBXGroup;
 			children = (
+				66F521EE1C62D35600408DE2 /* Model */,
 				66F521BA1C62CFC400408DE2 /* PathOfLeastResistance */,
 				66F521D41C62CFC400408DE2 /* PathOfLeastResistanceTests */,
 				66F521DF1C62CFC400408DE2 /* PathOfLeastResistanceUITests */,
@@ -138,6 +143,15 @@
 				66F521E21C62CFC400408DE2 /* Info.plist */,
 			);
 			path = PathOfLeastResistanceUITests;
+			sourceTree = "<group>";
+		};
+		66F521EE1C62D35600408DE2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				66F521F01C62D3E000408DE2 /* LPRModel.h */,
+				66F521F11C62D3E000408DE2 /* LPRModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F521F21C62D3E000408DE2 /* LPRModel.m in Sources */,
 				66F521C31C62CFC400408DE2 /* ViewController.m in Sources */,
 				66F521C01C62CFC400408DE2 /* AppDelegate.m in Sources */,
 				66F521BD1C62CFC400408DE2 /* main.m in Sources */,
@@ -280,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F521F31C62D3E000408DE2 /* LPRModel.m in Sources */,
 				66F521D61C62CFC400408DE2 /* PathOfLeastResistanceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +514,7 @@
 				66F521E71C62CFC400408DE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		66F521E81C62CFC400408DE2 /* Build configuration list for PBXNativeTarget "PathOfLeastResistanceTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +523,7 @@
 				66F521EA1C62CFC400408DE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		66F521EB1C62CFC400408DE2 /* Build configuration list for PBXNativeTarget "PathOfLeastResistanceUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +532,7 @@
 				66F521ED1C62CFC400408DE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

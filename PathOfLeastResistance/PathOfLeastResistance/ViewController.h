@@ -10,6 +10,10 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger nRowCount;
+@property (nonatomic, assign) NSInteger nColumnCount;
+
+- (void)getRowValues:(NSArray*)arrRowColumn;
 
 @end
 
